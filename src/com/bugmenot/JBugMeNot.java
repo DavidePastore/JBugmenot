@@ -12,7 +12,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
- * @author <a href="https://github.com/DavidePastore">DavidePastore</a> & <a href="https://github.com/JBassx"> Giuseppe  Ciullo</a>
+ * @author <a href="https://github.com/DavidePastore">DavidePastore</a> 
+ * @author <a href="https://github.com/JBassx">Giuseppe Ciullo</a>
  *
  */
 public class JBugMeNot {
