@@ -48,13 +48,25 @@ public class JBugMeNot {
 		return BASE_URL;
 	}
 	
-	public static ArrayList<Account> getAllAccounts(String website) throws IOException
-	{
+	/**
+	 * Returns an ArrayList<Account> of all the accounts of a website.
+	 * @param website the website.
+	 * @return Returns an ArrayList<Account> of all the accounts of a website.
+	 * @throws IOException
+	 */
+	public static ArrayList<Account> getAllAccounts(String website) throws IOException{
 		return getAllAccounts(website,"Mozilla");
 	}
 	
-	public static ArrayList<Account> getAllAccounts(String website,String userAgent) throws IOException{
-		ArrayList<Account> accounts=null;
+	/**
+	 * Returns an ArrayList<Account> of all the accounts of a website.
+	 * @param website website the website.
+	 * @param userAgent the userAgent to use.
+	 * @return Returns an ArrayList<Account> of all the accounts of a website.
+	 * @throws IOException
+	 */
+	public static ArrayList<Account> getAllAccounts(String website, String userAgent) throws IOException{
+		ArrayList<Account> accounts = null;
 		Document doc = Jsoup.connect("http://www.bugmenot.com/view/"+website).userAgent(userAgent).get();
 		Elements account_elements = doc.getElementsByClass("account");
 		for(Element account_element : account_elements)	{
