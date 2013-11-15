@@ -1,7 +1,7 @@
 JBugmenot
 =========
 
-Bugmenot library for Java to find account and password for various sites.
+Java Bugmenot library to find account and password for various sites.
 
 
 Usage
