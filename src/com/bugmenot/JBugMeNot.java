@@ -30,8 +30,12 @@ public class JBugMeNot {
 	 */
 	private static final String BASE_URL = "http://www.bugmenot.com/view/";
 	
+	/**
+	 * Default user agent.
+	 */
+	private static String defaultUserAgent = "Mozilla";
 	
-	
+
 	/**
 	 * Get the version number.
 	 * @return Returns the version number.
@@ -49,13 +53,27 @@ public class JBugMeNot {
 	}
 	
 	/**
+	 * @return the defaultUserAgent
+	 */
+	public static String getDefaultUserAgent() {
+		return defaultUserAgent;
+	}
+
+	/**
+	 * @param defaultUserAgent the defaultUserAgent to set
+	 */
+	public static void setDefaultUserAgent(String defaultUserAgent) {
+		JBugMeNot.defaultUserAgent = defaultUserAgent;
+	}
+	
+	/**
 	 * Returns an ArrayList<Account> of all the accounts of a website.
 	 * @param website the website.
 	 * @return Returns an ArrayList<Account> of all the accounts of a website.
 	 * @throws IOException
 	 */
 	public static ArrayList<Account> getAllAccounts(String website) throws IOException{
-		return getAllAccounts(website,"Mozilla");
+		return getAllAccounts(website, defaultUserAgent);
 	}
 	
 	/**
@@ -66,8 +84,8 @@ public class JBugMeNot {
 	 * @throws IOException
 	 */
 	public static ArrayList<Account> getAllAccounts(String website, String userAgent) throws IOException{
-		ArrayList<Account> accounts = null;
-		Document doc = Jsoup.connect("http://www.bugmenot.com/view/"+website).userAgent(userAgent).get();
+		ArrayList<Account> accounts = new ArrayList<Account>();
+		Document doc = Jsoup.connect("http://www.bugmenot.com/view/" + website).userAgent(userAgent).get();
 		Elements account_elements = doc.getElementsByClass("account");
 		for(Element account_element : account_elements)	{
 			Element tbody = account_element.select("table tbody").first();
@@ -84,6 +102,7 @@ public class JBugMeNot {
 						case "stats"	:	account.setStats(td.substring(0, 3));break;
 					}
 				}
+				accounts.add(account);
 			}
 			else break;
 		}
