@@ -89,22 +89,20 @@ public class JBugMeNot {
 		Elements account_elements = doc.getElementsByClass("account");
 		for(Element account_element : account_elements)	{
 			Element tbody = account_element.select("table tbody").first();
-			if(Integer.parseInt(tbody.child(3).getElementsByTag("td").text().substring(0, 2))>=50){
-				Account account=new Account();
-				Elements tr_elements=tbody.children();
-				for(Element tr:tr_elements){
-					String th = tr.getElementsByTag("th").text();
-					String td = tr.getElementsByTag("td").text();
-					switch(th.toLowerCase()){
-						case "username"	:	account.setUsername(td);break;
-						case "password"	:	account.setPassword(td);break;
-						case "other"	:	account.setOther(td);break;
-						case "stats"	:	account.setStats(td.substring(0, 3));break;
-					}
+			Account account=new Account();
+			Elements tr_elements=tbody.children();
+			for(Element tr:tr_elements){
+				String th = tr.getElementsByTag("th").text();
+				String td = tr.getElementsByTag("td").text();
+				switch(th.toLowerCase()){
+					case "username"	:	account.setUsername(td);break;
+					case "password"	:	account.setPassword(td);break;
+					case "other"	:	account.setOther(td);break;
+					case "stats"	:	account.setStats(td.substring(0, 3));break;
 				}
-				accounts.add(account);
 			}
-			else break;
+			accounts.add(account);
+			
 		}
 		return accounts;
 	}
