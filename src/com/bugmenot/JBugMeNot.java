@@ -102,7 +102,6 @@ public class JBugMeNot {
 				}
 			}
 			accounts.add(account);
-			
 		}
 		return accounts;
 	}
