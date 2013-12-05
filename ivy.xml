@@ -20,10 +20,12 @@
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info
-        organisation="DavidePastore"
-        module="JBugmenot"
-        status="integration">
+        organisation="com.github.davidepastore"
+        module="jbugmenot"
+        status="integration"
+        revision="${revision}">
 	</info>
+	
 	<dependencies>
 		<dependency org="org.jsoup" name="jsoup" rev="1.7.2" />
 	</dependencies>

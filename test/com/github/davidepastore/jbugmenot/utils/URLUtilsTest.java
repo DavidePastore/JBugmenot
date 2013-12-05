@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bugmenot.utils;
+package com.github.davidepastore.jbugmenot.utils;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,8 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.github.davidepastore.jbugmenot.utils.URLUtils;
 
 /**
  * Test for the url utils.
@@ -33,7 +35,7 @@ public class URLUtilsTest {
 	}
 
 	/**
-	 * Test method for {@link com.bugmenot.utils.URLUtils#getRequest(java.lang.String)}.
+	 * Test method for {@link com.github.davidepastore.jbugmenot.utils.URLUtils#getRequest(java.lang.String)}.
 	 */
 	@Test
 	public void testGetRequest() {

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bugmenot;
+package com.github.davidepastore.jbugmenot;
 
 import java.io.IOException;
 import java.util.ArrayList;

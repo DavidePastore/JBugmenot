@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bugmenot;
+package com.github.davidepastore.jbugmenot;
 
 import static org.junit.Assert.*;
 
@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.github.davidepastore.jbugmenot.Account;
+import com.github.davidepastore.jbugmenot.JBugMeNot;
 
 /**
  * JBugMeNot testing class.
@@ -34,7 +37,7 @@ public class JBugMeNotTest {
 	}
 
 	/**
-	 * Test method for {@link com.bugmenot.JBugMeNot#getAllAccounts(java.lang.String)}.
+	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugMeNot#getAllAccounts(java.lang.String)}.
 	 * @throws IOException 
 	 */
 	@Test
@@ -63,7 +66,7 @@ public class JBugMeNotTest {
 	}
 
 	/**
-	 * Test method for {@link com.bugmenot.JBugMeNot#getAllAccounts(java.lang.String, java.lang.String)}.
+	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugMeNot#getAllAccounts(java.lang.String, java.lang.String)}.
 	 * @throws IOException 
 	 */
 	@Test

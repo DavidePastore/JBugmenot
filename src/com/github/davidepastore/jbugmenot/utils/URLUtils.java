@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bugmenot.utils;
+package com.github.davidepastore.jbugmenot.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
