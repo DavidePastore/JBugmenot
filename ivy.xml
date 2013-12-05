@@ -24,6 +24,7 @@
         module="jbugmenot"
         status="integration"
         revision="${revision}">
+        <description homepage="https://github.com/DavidePastore/JBugmenot">Java Bugmenot library to find account and password for various sites.</description>
 	</info>
 	
 	<dependencies>
