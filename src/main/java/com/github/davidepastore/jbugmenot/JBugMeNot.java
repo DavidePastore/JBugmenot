@@ -12,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
+ * The main class of the library. It contains static methods to access to all the accounts of a website and to set other things.
  * @author <a href="https://github.com/DavidePastore">DavidePastore</a> 
  * @author <a href="https://github.com/JBassx">Giuseppe Ciullo</a>
  *
