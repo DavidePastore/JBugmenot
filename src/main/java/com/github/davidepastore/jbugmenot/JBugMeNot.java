@@ -24,7 +24,6 @@ public class JBugMeNot {
 	private static final String VERSION = "0.1.0";
 	
 	
-	
 	/**
 	 * Base url of the site.
 	 */
@@ -35,6 +34,13 @@ public class JBugMeNot {
 	 */
 	private static String defaultUserAgent = "Mozilla";
 	
+	
+	/**
+	 * Fields names.
+	 */
+	private enum FieldName {
+		username, password, other, stats
+	};
 
 	/**
 	 * Get the version number.
@@ -94,12 +100,31 @@ public class JBugMeNot {
 			for(Element tr:tr_elements){
 				String th = tr.getElementsByTag("th").text();
 				String td = tr.getElementsByTag("td").text();
+				FieldName fieldName = FieldName.valueOf(th.toLowerCase());
+				
+				switch(fieldName){
+					case username:
+						account.setUsername(td);
+						break;
+					case password:
+						account.setPassword(td);
+						break;
+					case other:
+						account.setOther(td);
+						break;
+					case stats:
+						account.setStats(td.substring(0, 3));
+						break;
+				}
+				
+				/*
 				switch(th.toLowerCase()){
 					case "username"	:	account.setUsername(td);break;
 					case "password"	:	account.setPassword(td);break;
 					case "other"	:	account.setOther(td);break;
 					case "stats"	:	account.setStats(td.substring(0, 3));break;
 				}
+				*/
 			}
 			accounts.add(account);
 		}
