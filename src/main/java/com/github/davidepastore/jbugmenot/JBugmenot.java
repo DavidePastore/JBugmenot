@@ -17,7 +17,7 @@ import org.jsoup.select.Elements;
  * @author <a href="https://github.com/JBassx">Giuseppe Ciullo</a>
  *
  */
-public class JBugMeNot {
+public class JBugmenot {
 	
 	/**
 	 * Version of the library.
@@ -70,7 +70,7 @@ public class JBugMeNot {
 	 * @param defaultUserAgent the defaultUserAgent to set
 	 */
 	public static void setDefaultUserAgent(String defaultUserAgent) {
-		JBugMeNot.defaultUserAgent = defaultUserAgent;
+		JBugmenot.defaultUserAgent = defaultUserAgent;
 	}
 	
 	/**

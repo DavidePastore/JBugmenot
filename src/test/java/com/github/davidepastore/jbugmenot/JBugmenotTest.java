@@ -13,14 +13,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.github.davidepastore.jbugmenot.Account;
-import com.github.davidepastore.jbugmenot.JBugMeNot;
+import com.github.davidepastore.jbugmenot.JBugmenot;
 
 /**
  * JBugMeNot testing class.
  * @author <a href="https://github.com/DavidePastore">DavidePastore</a>
  *
  */
-public class JBugMeNotTest {
+public class JBugmenotTest {
 
 	/**
 	 * @throws java.lang.Exception
@@ -37,12 +37,12 @@ public class JBugMeNotTest {
 	}
 
 	/**
-	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugMeNot#getAllAccounts(java.lang.String)}.
+	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugmenot#getAllAccounts(java.lang.String)}.
 	 * @throws IOException 
 	 */
 	@Test
 	public void testGetAllAccountsString() throws IOException {
-		ArrayList<Account> accounts = JBugMeNot.getAllAccounts("nypost.com");
+		ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
 		assertFalse("No accounts found for nypost.com", accounts.isEmpty());
 	}
 	
@@ -52,7 +52,7 @@ public class JBugMeNotTest {
 	 */
 	@Test
 	public void testGetAllAccountsAndReadAttributes() throws IOException {
-		ArrayList<Account> accounts = JBugMeNot.getAllAccounts("nypost.com");
+		ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
 		Account firstAccount = accounts.get(0);
 		String username = firstAccount.getUsername();
 		String password = firstAccount.getPassword();
@@ -66,12 +66,12 @@ public class JBugMeNotTest {
 	}
 
 	/**
-	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugMeNot#getAllAccounts(java.lang.String, java.lang.String)}.
+	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugmenot#getAllAccounts(java.lang.String, java.lang.String)}.
 	 * @throws IOException 
 	 */
 	@Test
 	public void testGetAllAccountsStringString() throws IOException {
-		ArrayList<Account> accounts = JBugMeNot.getAllAccounts("nypost.com", "Explorer");
+		ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com", "Explorer");
 		assertFalse("No accounts found for nypost.com", accounts.isEmpty());
 	}
 
