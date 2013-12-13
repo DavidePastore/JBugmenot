@@ -25,9 +25,9 @@
 	</issueManagement>
 
 	<scm>
-		<connection>scm:git:git://github.com/DavidePastore/JBugmenot.git</connection>
+		<connection>scm:git:git@github.com:DavidePastore/JBugmenot.git</connection>
 		<developerConnection>scm:git:git@github.com:DavidePastore/JBugmenot.git</developerConnection>
-		<url>https://github.com/DavidePastore/JBugmenot.git</url>
+		<url>scm:git:git@github.com:DavidePastore/JBugmenot.git</url>
 	</scm>
 
 	<parent>
