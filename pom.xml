@@ -2,14 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<name>JBugmenot</name>
-	
+
 	<groupId>com.github.davidepastore</groupId>
 	<artifactId>jbugmenot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<description>Java Bugmenot library to find account and password for various sites.</description>
 	<url>https://github.com/DavidePastore/JBugmenot</url>
-	
+
 	<licenses>
 		<license>
 			<name>GPLv3</name>
@@ -18,18 +18,24 @@
 			<comments>GNU General Public License</comments>
 		</license>
 	</licenses>
-	
+
 	<issueManagement>
 		<url>https://github.com/DavidePastore/JBugmenot/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
-	
+
 	<scm>
-		<url>https://github.com/DavidePastore/JBugmenot</url>
 		<connection>scm:git:git://github.com/DavidePastore/JBugmenot.git</connection>
 		<developerConnection>scm:git:git@github.com:DavidePastore/JBugmenot.git</developerConnection>
+		<url>https://github.com/DavidePastore/JBugmenot.git</url>
 	</scm>
-	
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
 	<developers>
 		<developer>
 			<email>pasdavide@gmail.com</email>
@@ -43,9 +49,10 @@
 			<id>JBassx</id>
 		</developer>
 	</developers>
-	
+
 	<build>
 		<plugins>
+			<!-- Compiler -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -54,8 +61,73 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
+
+			<!-- Javadoc generator -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.6.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Source generator -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<!-- gpg plugin -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<dependencies>
 		<dependency>
