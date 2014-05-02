@@ -42,6 +42,11 @@ public class JBugmenot {
 	private enum FieldName {
 		username, password, other, stats
 	};
+	
+	/**
+	 * The minimum success rate.
+	 */
+	private static int minimumSuccessRate = 0;
 
 	/**
 	 * Get the version number.
@@ -72,7 +77,26 @@ public class JBugmenot {
 	public static void setDefaultUserAgent(String defaultUserAgent) {
 		JBugmenot.defaultUserAgent = defaultUserAgent;
 	}
+
 	
+	/**
+	 * Get the minimum success rate.
+	 * Accounts will not be added if the success rate will be lower of this value.
+	 * @return the minimumSuccessRate
+	 */
+	public static int getMinimumSuccessRate() {
+		return minimumSuccessRate;
+	}
+
+	/**
+	 * Set the minimum success rate.
+	 * Accounts will not be added if the success rate will be lower of this value.
+	 * @param minimumSuccessRate the minimumSuccessRate to set
+	 */
+	public static void setMinimumSuccessRate(int minimumSuccessRate) {
+		JBugmenot.minimumSuccessRate = minimumSuccessRate;
+	}
+
 	/**
 	 * Returns an ArrayList<Account> of all the accounts of a website.
 	 * @param website the website.
@@ -109,14 +133,18 @@ public class JBugmenot {
 			long votes = parseVotes(liElements.get(1).text());
 			String dateAdded = liElements.get(2).text();
 			
-			//Set the account attributes
-			account.setUsername(username);
-			account.setPassword(password);
-			account.setStats(stats);
-			account.setVotes(votes);
-			account.setOther(votes + " " + dateAdded);
+			//Add the account only if reaches the minimum success rate
+			if(getOnlyNumbers(stats) >= minimumSuccessRate){
+				//Set the account attributes
+				account.setUsername(username);
+				account.setPassword(password);
+				account.setStats(stats);
+				account.setVotes(votes);
+				account.setOther(votes + " " + dateAdded);
+				
+				accounts.add(account);
+			}
 			
-			accounts.add(account);
 		}
 		return accounts;
 	}
@@ -128,7 +156,17 @@ public class JBugmenot {
 	 * @return Returns the votes in long format.
 	 */
 	private static long parseVotes(String votes){
-		return Long.parseLong(votes.replaceAll("\\D+", ""));
+		return getOnlyNumbers(votes);
+	}
+	
+	
+	/**
+	 * Get only the number part of a string.
+	 * @param number The number String.
+	 * @return Returns the numbers in long format.
+	 */
+	private static long getOnlyNumbers(String number){
+		return Long.parseLong(number.replaceAll("\\D+", ""));
 	}
 	
 }

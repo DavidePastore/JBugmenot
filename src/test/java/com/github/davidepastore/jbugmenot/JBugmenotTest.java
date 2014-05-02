@@ -76,5 +76,22 @@ public class JBugmenotTest {
 		ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com", "Explorer");
 		assertFalse("No accounts found for nypost.com", accounts.isEmpty());
 	}
+	
+	/**
+	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugmenot#getAllAccounts(java.lang.String)}
+	 * with minimum success rate test.
+	 * @throws IOException 
+	 */
+	@Test
+	public void testGetAllAccountsAndReadAttributesWithMinimum() throws IOException {
+		int minimumSuccessRate = 50;
+		JBugmenot.setMinimumSuccessRate(minimumSuccessRate);
+		ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
+		for (Account account : accounts) {
+			if(Integer.parseInt(account.getStats().replaceAll("\\D+", "")) < minimumSuccessRate){
+				fail("Minimum success rate is not respected.");
+			}
+		}
+	}
 
 }
