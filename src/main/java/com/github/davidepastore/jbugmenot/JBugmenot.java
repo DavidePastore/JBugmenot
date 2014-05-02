@@ -93,40 +93,27 @@ public class JBugmenot {
 	public static ArrayList<Account> getAllAccounts(String website, String userAgent) throws IOException{
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		Document doc = Jsoup.connect("http://www.bugmenot.com/view/" + website).userAgent(userAgent).get();
-		Elements account_elements = doc.getElementsByClass("account");
-		for(Element account_element : account_elements)	{
-			Element tbody = account_element.select("table tbody").first();
-			Account account=new Account();
-			Elements tr_elements=tbody.children();
-			for(Element tr:tr_elements){
-				String th = tr.getElementsByTag("th").text();
-				String td = tr.getElementsByTag("td").text();
-				FieldName fieldName = FieldName.valueOf(th.toLowerCase());
-				
-				switch(fieldName){
-					case username:
-						account.setUsername(td);
-						break;
-					case password:
-						account.setPassword(td);
-						break;
-					case other:
-						account.setOther(td);
-						break;
-					case stats:
-						account.setStats(td.substring(0, 3));
-						break;
-				}
-				
-				/*
-				switch(th.toLowerCase()){
-					case "username"	:	account.setUsername(td);break;
-					case "password"	:	account.setPassword(td);break;
-					case "other"	:	account.setOther(td);break;
-					case "stats"	:	account.setStats(td.substring(0, 3));break;
-				}
-				*/
-			}
+		Elements accountElements = doc.getElementsByClass("account");
+		Account account = new Account();
+		for(Element accountElement : accountElements)	{
+			Elements kbdElements = accountElement.select("dd kbd");
+			
+			//Get username and password
+			String username = kbdElements.get(0).text();
+			String password = kbdElements.get(1).text();
+			
+			//Get stats
+			Elements liElements = accountElement.select(".stats li");
+			String stats = liElements.get(0).text().substring(0, 3);
+			String votes = liElements.get(1).text();
+			String dateAdded = liElements.get(2).text();
+			
+			//Set the account attributes
+			account.setUsername(username);
+			account.setPassword(password);
+			account.setStats(stats);
+			account.setOther(votes + " " + dateAdded);
+			
 			accounts.add(account);
 		}
 		return accounts;
