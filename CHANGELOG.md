@@ -1,4 +1,4 @@
-* 0.1.0 (yyyy-mm-dd)
+* 0.1.0 (2014-05-02)
 
  * Fix library (site changes)
  * Add votes attribute for Accounts
