@@ -14,6 +14,7 @@ public class Account {
 	private String password;
 	private String other;
 	private String stats;
+	private long votes;
 	
 	
 	/**
@@ -70,6 +71,20 @@ public class Account {
 	 */
 	public void setStats(String stats) {
 		this.stats = stats;
+	}
+
+	/**
+	 * @return the votes
+	 */
+	public long getVotes() {
+		return votes;
+	}
+
+	/**
+	 * @param votes the votes to set
+	 */
+	public void setVotes(long votes) {
+		this.votes = votes;
 	}
 
 }

@@ -94,8 +94,9 @@ public class JBugmenot {
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		Document doc = Jsoup.connect("http://www.bugmenot.com/view/" + website).userAgent(userAgent).get();
 		Elements accountElements = doc.getElementsByClass("account");
-		Account account = new Account();
+		Account account;
 		for(Element accountElement : accountElements)	{
+			account = new Account();
 			Elements kbdElements = accountElement.select("dd kbd");
 			
 			//Get username and password
@@ -105,13 +106,14 @@ public class JBugmenot {
 			//Get stats
 			Elements liElements = accountElement.select(".stats li");
 			String stats = liElements.get(0).text().substring(0, 3);
-			String votes = liElements.get(1).text();
+			long votes = parseVotes(liElements.get(1).text());
 			String dateAdded = liElements.get(2).text();
 			
 			//Set the account attributes
 			account.setUsername(username);
 			account.setPassword(password);
 			account.setStats(stats);
+			account.setVotes(votes);
 			account.setOther(votes + " " + dateAdded);
 			
 			accounts.add(account);
@@ -120,4 +122,13 @@ public class JBugmenot {
 	}
 		
 
+	/**
+	 * Parse the votes String and create the long value.
+	 * @param votes The votes String.
+	 * @return Returns the votes in long format.
+	 */
+	private static long parseVotes(String votes){
+		return Long.parseLong(votes.replaceAll("\\D+", ""));
+	}
+	
 }
