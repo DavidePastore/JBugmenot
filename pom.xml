@@ -4,7 +4,7 @@
 
 	<groupId>com.github.davidepastore</groupId>
 	<artifactId>jbugmenot</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<description>Java Bugmenot library to find account and password for various sites.</description>
 	<url>https://github.com/DavidePastore/JBugmenot</url>
