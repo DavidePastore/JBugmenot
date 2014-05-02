@@ -92,7 +92,7 @@ public class JBugmenot {
 	 */
 	public static ArrayList<Account> getAllAccounts(String website, String userAgent) throws IOException{
 		ArrayList<Account> accounts = new ArrayList<Account>();
-		Document doc = Jsoup.connect("http://www.bugmenot.com/view/" + website).userAgent(userAgent).get();
+		Document doc = Jsoup.connect(BASE_URL + website).userAgent(userAgent).get();
 		Elements accountElements = doc.getElementsByClass("account");
 		Account account;
 		for(Element accountElement : accountElements)	{
@@ -120,7 +120,7 @@ public class JBugmenot {
 		}
 		return accounts;
 	}
-		
+	
 
 	/**
 	 * Parse the votes String and create the long value.
