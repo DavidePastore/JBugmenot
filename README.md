@@ -36,6 +36,13 @@ String password = firstAccount.getPassword();
 long votes = firstAccount.getVotes();
 ```
 
+Find all the accounts that have a given succes rate:
+
+```java
+JBugmenot.setMinimumSuccessRate(50);
+ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
+```
+
 Issues
 ------
 
