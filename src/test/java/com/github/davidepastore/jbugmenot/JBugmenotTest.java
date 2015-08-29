@@ -60,13 +60,16 @@ public class JBugmenotTest {
 		String stats = firstAccount.getStats();
 		long votes = firstAccount.getVotes();
 		long id = firstAccount.getId();
-		System.out.printf("Username: %s\nPassword: %s\nOther: %s\nStats: %s\nVotes: %s\nId: %s", username, password, other, stats, votes, id);
+		long site = firstAccount.getSite();
+		System.out.printf("Username: %s\nPassword: %s\nOther: %s\nStats: %s\nVotes: %s\nId: %s\nSite: %s",
+				username, password, other, stats, votes, id, site);
 		assertNotNull("The username is null.", username);
 		assertNotNull("The password is null.", password);
 		assertNotNull("The other field is null.", other);
 		assertNotNull("The stats field is null.", stats);
 		assertNotNull("The votes field is null.", votes);
 		assertNotNull("The id field is null.", id);
+		assertNotNull("The site field is null.", site);
 	}
 
 	/**
@@ -94,6 +97,24 @@ public class JBugmenotTest {
 				fail("Minimum success rate is not respected.");
 			}
 		}
+	}
+	
+	/**
+	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugmenot#vote(com.github.davidepastore.jbugmenot, boolean)}.
+	 * @throws IOException 
+	 */
+	@Test
+	public void testVote() throws IOException {
+		String site = "corriere.it";
+		ArrayList<Account> accounts = JBugmenot.getAllAccounts(site);
+		Account lastAccount = accounts.get(accounts.size() - 1);
+		long oldVotes = lastAccount.getVotes();
+		JBugmenot.vote(lastAccount, false);
+		
+		accounts = JBugmenot.getAllAccounts(site);
+		lastAccount = accounts.get(accounts.size() - 1);
+		long newVotes = lastAccount.getVotes();
+		assertEquals("Vote number is different", oldVotes + 1, newVotes);
 	}
 
 }

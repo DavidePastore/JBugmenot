@@ -5,7 +5,11 @@ package com.github.davidepastore.jbugmenot;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.jsoup.Connection;
+import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -28,12 +32,17 @@ public class JBugmenot {
 	/**
 	 * Base url of the site.
 	 */
-	private static final String BASE_URL = "http://www.bugmenot.com/";
+	private static final String BASE_URL = "http://bugmenot.com/";
 	
 	/**
 	 * Base url for the view.
 	 */
 	private static final String BASE_VIEW_URL = BASE_URL + "view/";
+	
+	/**
+	 * Url to vote the website.
+	 */
+	private static final String VOTE_URL = BASE_URL + "vote.php";
 	
 	/**
 	 * Default user agent.
@@ -137,6 +146,7 @@ public class JBugmenot {
 			String stats = liElements.get(0).text().substring(0, 3);
 			long votes = parseVotes(liElements.get(1).text());
 			String dateAdded = liElements.get(2).text();
+			long site = Long.parseLong(accountElement.select("form input[name=site]").val());
 			
 			//Add the account only if reaches the minimum success rate
 			if(getOnlyNumbers(stats) >= minimumSuccessRate){
@@ -147,6 +157,7 @@ public class JBugmenot {
 				account.setVotes(votes);
 				account.setOther(votes + " " + dateAdded);
 				account.setId(Long.parseLong(accountElement.attr("data-account_id")));
+				account.setSite(site);
 				accounts.add(account);
 			}
 			
@@ -172,6 +183,27 @@ public class JBugmenot {
 	 */
 	private static long getOnlyNumbers(String number){
 		return Long.parseLong(number.replaceAll("\\D+", ""));
+	}
+	
+	/**
+	 * Vote the given account using a positive or negative vote.
+	 * @param account The account to vote.
+	 * @param vote The vote. True to mark this as good login, false otherwise.
+	 * @throws IOException 
+	 */
+	public static void vote(Account account, boolean vote) throws IOException{
+		String voteString = vote ? "Y" : "N";
+		System.out.println("VOTE_URL: " + VOTE_URL);
+		System.out.println("account: " + Long.toString(account.getId()));
+		System.out.println("site: " + Long.toString(account.getSite()));
+		System.out.println("voteString: " + voteString);
+		Jsoup.connect(VOTE_URL)
+			.data("account", Long.toString(account.getId()))
+			.data("site", Long.toString(account.getSite()))
+			.data("vote", voteString)
+			.userAgent(defaultUserAgent)
+			.method(Method.POST)
+			.execute();
 	}
 	
 }

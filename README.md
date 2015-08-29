@@ -44,6 +44,16 @@ JBugmenot.setMinimumSuccessRate(50);
 ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
 ```
 
+Vote an account:
+
+```java
+ArrayList<Account> accounts = JBugmenot.getAllAccounts("corriere.it");
+Account lastAccount = accounts.get(accounts.size() - 1);
+JBugmenot.vote(lastAccount, false);
+//OR
+lastAccount.vote(false);
+```
+
 Issues
 ------
 
