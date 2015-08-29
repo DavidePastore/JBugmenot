@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.davidepastore.jbugmenot.Account;
@@ -101,9 +102,12 @@ public class JBugmenotTest {
 	
 	/**
 	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugmenot#vote(com.github.davidepastore.jbugmenot, boolean)}.
+	 * This method is ignored because it works only the first time it is called. I guess it is because the request comes
+	 * from the same IP address.
 	 * @throws IOException 
 	 */
 	@Test
+	@Ignore
 	public void testVote() throws IOException {
 		String site = "corriere.it";
 		ArrayList<Account> accounts = JBugmenot.getAllAccounts(site);
