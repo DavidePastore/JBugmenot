@@ -59,12 +59,14 @@ public class JBugmenotTest {
 		String other = firstAccount.getOther();
 		String stats = firstAccount.getStats();
 		long votes = firstAccount.getVotes();
-		System.out.printf("Username: %s\nPassword: %s\nOther: %s\nStats: %s\nVotes: %s", username, password, other, stats, votes);
+		long id = firstAccount.getId();
+		System.out.printf("Username: %s\nPassword: %s\nOther: %s\nStats: %s\nVotes: %s\nId: %s", username, password, other, stats, votes, id);
 		assertNotNull("The username is null.", username);
 		assertNotNull("The password is null.", password);
 		assertNotNull("The other field is null.", other);
 		assertNotNull("The stats field is null.", stats);
 		assertNotNull("The votes field is null.", votes);
+		assertNotNull("The id field is null.", id);
 	}
 
 	/**

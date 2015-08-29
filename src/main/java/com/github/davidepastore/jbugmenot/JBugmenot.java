@@ -13,7 +13,7 @@ import org.jsoup.select.Elements;
 
 /**
  * The main class of the library. It contains static methods to access to all the accounts of a website and to set other things.
- * @author <a href="https://github.com/DavidePastore">DavidePastore</a> 
+ * @author <a href="https://github.com/DavidePastore">Davide Pastore</a> 
  * @author <a href="https://github.com/JBassx">Giuseppe Ciullo</a>
  *
  */
@@ -28,7 +28,12 @@ public class JBugmenot {
 	/**
 	 * Base url of the site.
 	 */
-	private static final String BASE_URL = "http://www.bugmenot.com/view/";
+	private static final String BASE_URL = "http://www.bugmenot.com/";
+	
+	/**
+	 * Base url for the view.
+	 */
+	private static final String BASE_VIEW_URL = BASE_URL + "view/";
 	
 	/**
 	 * Default user agent.
@@ -116,7 +121,7 @@ public class JBugmenot {
 	 */
 	public static ArrayList<Account> getAllAccounts(String website, String userAgent) throws IOException{
 		ArrayList<Account> accounts = new ArrayList<Account>();
-		Document doc = Jsoup.connect(BASE_URL + website).userAgent(userAgent).get();
+		Document doc = Jsoup.connect(BASE_VIEW_URL + website).userAgent(userAgent).get();
 		Elements accountElements = doc.getElementsByClass("account");
 		Account account;
 		for(Element accountElement : accountElements)	{
@@ -141,7 +146,7 @@ public class JBugmenot {
 				account.setStats(stats);
 				account.setVotes(votes);
 				account.setOther(votes + " " + dateAdded);
-				
+				account.setId(Long.parseLong(accountElement.attr("data-account_id")));
 				accounts.add(account);
 			}
 			
