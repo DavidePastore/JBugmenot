@@ -1,5 +1,6 @@
 JBugmenot
 =========
+[![Build Status](https://travis-ci.org/DavidePastore/JBugmenot.svg?branch=master)](https://travis-ci.org/DavidePastore/JBugmenot)
 
 Java [Bugmenot](http://www.bugmenot.com/) library to find account and password for various sites.
 
