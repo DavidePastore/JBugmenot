@@ -1,3 +1,8 @@
+* x
+
+ * Add missing resources directories
+
+
 * 0.1.0 (2014-05-02)
 
  * Fix library (site changes)
