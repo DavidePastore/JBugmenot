@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -62,8 +63,9 @@ public class JBugmenotTest {
 		long votes = firstAccount.getVotes();
 		long id = firstAccount.getId();
 		long site = firstAccount.getSite();
-		System.out.printf("Username: %s\nPassword: %s\nOther: %s\nStats: %s\nVotes: %s\nId: %s\nSite: %s",
-				username, password, other, stats, votes, id, site);
+		Date addingDate = firstAccount.getAddingDate();
+		System.out.printf("Username: %s\nPassword: %s\nOther: %s\nStats: %s\nVotes: %s\nId: %s\nSite: %s\nAdding Date: %s\n",
+				username, password, other, stats, votes, id, site, addingDate);
 		assertNotNull("The username is null.", username);
 		assertNotNull("The password is null.", password);
 		assertNotNull("The other field is null.", other);
@@ -71,6 +73,7 @@ public class JBugmenotTest {
 		assertNotNull("The votes field is null.", votes);
 		assertNotNull("The id field is null.", id);
 		assertNotNull("The site field is null.", site);
+		assertNotNull("The addingDate field is null.", addingDate);
 	}
 
 	/**

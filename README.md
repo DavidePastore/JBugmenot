@@ -27,7 +27,7 @@ Find all the accounts of a site:
 ArrayList<Account> accounts = JBugMeNot.getAllAccounts("nypost.com");
 ```
 
-Find the first username/password of a site:
+Find the first login of a site:
 
 ```java
 ArrayList<Account> accounts = JBugMeNot.getAllAccounts("imdb.com");
@@ -35,6 +35,7 @@ Account firstAccount = accounts.get(0);
 String username = firstAccount.getUsername();
 String password = firstAccount.getPassword();
 long votes = firstAccount.getVotes();
+Date addingDate = firstAccount.getAddingDate();
 ```
 
 Find all the accounts that have a given succes rate:

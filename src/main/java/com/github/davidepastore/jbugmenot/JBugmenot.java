@@ -5,6 +5,7 @@ package com.github.davidepastore.jbugmenot;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +44,11 @@ public class JBugmenot {
 	 * Url to vote the website.
 	 */
 	private static final String VOTE_URL = BASE_URL + "vote.php";
+	
+	/**
+	 * Number of milliseconds in a day.
+	 */
+	private static final long DAY_IN_MS = 1000 * 60 * 60 * 24;
 	
 	/**
 	 * Default user agent.
@@ -144,20 +150,22 @@ public class JBugmenot {
 			//Get stats
 			Elements liElements = accountElement.select(".stats li");
 			String stats = liElements.get(0).text().substring(0, 3);
-			long votes = parseVotes(liElements.get(1).text());
-			String dateAdded = liElements.get(2).text();
-			long site = Long.parseLong(accountElement.select("form input[name=site]").val());
 			
 			//Add the account only if reaches the minimum success rate
 			if(getOnlyNumbers(stats) >= minimumSuccessRate){
+				long votes = parseVotes(liElements.get(1).text());
+				long site = Long.parseLong(accountElement.select("form input[name=site]").val());
+				String addingDate = liElements.get(2).text();
+				
 				//Set the account attributes
 				account.setUsername(username);
 				account.setPassword(password);
 				account.setStats(stats);
 				account.setVotes(votes);
-				account.setOther(votes + " " + dateAdded);
+				account.setOther(votes + " " + addingDate);
 				account.setId(Long.parseLong(accountElement.attr("data-account_id")));
 				account.setSite(site);
+				account.setAddingDate(parseDate(addingDate));
 				accounts.add(account);
 			}
 			
@@ -173,6 +181,22 @@ public class JBugmenot {
 	 */
 	private static long parseVotes(String votes){
 		return getOnlyNumbers(votes);
+	}
+	
+	
+	/**
+	 * Parse the date string and transform it in a {@link Date} object.
+	 * @param dateString The date string.
+	 * @return Returns the parsed {@link Date} object.
+	 */
+	private static Date parseDate(String dateString){
+		long daysAgo = getOnlyNumbers(dateString);
+		if(dateString.contains("years") || dateString.contains("year")){
+			daysAgo = daysAgo * 365;
+		} else if(dateString.contains("months") || dateString.contains("month")){
+			daysAgo = daysAgo * 30;
+		}
+		return new Date(System.currentTimeMillis() - (daysAgo * DAY_IN_MS));
 	}
 	
 	

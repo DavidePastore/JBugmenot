@@ -4,6 +4,7 @@
 package com.github.davidepastore.jbugmenot;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * An account entity.
@@ -20,6 +21,7 @@ public class Account {
 	private long votes;
 	private long id;
 	private long site;
+	private Date addingDate;
 
 	/**
 	 * @return the username
@@ -119,19 +121,37 @@ public class Account {
 	}
 
 	/**
-	 * @param site the site to set
+	 * @param site
+	 *            the site to set
 	 */
 	public void setSite(long site) {
 		this.site = site;
 	}
-	
+
 	/**
 	 * Vote this account using a positive or negative vote.
-	 * @param vote The vote. True to mark this as good login, false otherwise.
-	 * @throws IOException 
+	 * 
+	 * @param vote
+	 *            The vote. True to mark this as good login, false otherwise.
+	 * @throws IOException
 	 */
-	public void vote(boolean vote) throws IOException{
+	public void vote(boolean vote) throws IOException {
 		JBugmenot.vote(this, vote);
+	}
+
+	/**
+	 * @return the addingDate
+	 */
+	public Date getAddingDate() {
+		return addingDate;
+	}
+
+	/**
+	 * @param addingDate
+	 *            the addingDate to set
+	 */
+	public void setAddingDate(Date addingDate) {
+		this.addingDate = addingDate;
 	}
 
 }

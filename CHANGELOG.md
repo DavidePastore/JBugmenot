@@ -2,7 +2,8 @@
 
  * Add missing resources directories
  * Add Travis CI Build
- * Add chance to vote an account 
+ * Add chance to vote an account
+ * Add adding date attribute for Account
 
 
 * 0.1.0 (2014-05-02)
