@@ -14,7 +14,7 @@ If you use Maven to manage the dependencies in your Java project (and you should
   <!-- Bugmenot library to find account and password for various sites -->
   <groupId>com.github.davidepastore</groupId>
   <artifactId>jbugmenot</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 

@@ -1,4 +1,4 @@
-* x
+* 0.2.0 (2015-09-12)
 
  * Add missing resources directories
  * Add Travis CI Build
