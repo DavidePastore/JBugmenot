@@ -1,6 +1,7 @@
 JBugmenot
 =========
 [![Build Status](https://travis-ci.org/DavidePastore/JBugmenot.svg?branch=master)](https://travis-ci.org/DavidePastore/JBugmenot)
+[![Known Vulnerabilities](https://snyk.io/test/github/davidepastore/jbugmenot/badge.svg)](https://snyk.io/test/github/davidepastore/jbugmenot)
 
 Java [Bugmenot](http://www.bugmenot.com/) library to find account and password for various sites.
 
