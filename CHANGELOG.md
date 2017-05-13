@@ -1,3 +1,9 @@
+* 0.2.1 (2017-05-13)
+
+    * Add snyk.io badge
+    * Fix Cross-site Scripting (XSS) in jsoup
+    * Improve format of CHANGELOG.md
+
 * 0.2.0 (2015-09-12)
 
     * Add missing resources directories
