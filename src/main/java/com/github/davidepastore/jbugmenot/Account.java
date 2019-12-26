@@ -4,6 +4,7 @@ package com.github.davidepastore.jbugmenot;
  * An account entity.
  * 
  * @author <a href="https://github.com/DavidePastore">DavidePastore</a>
+ * @author <a href="https://github.com/mdewilde">Marceau Dewilde</a>
  */
 public class Account {
 

@@ -55,6 +55,11 @@
 			<url>https://github.com/JBassx</url>
 			<id>JBassx</id>
 		</developer>
+		<developer>
+			<name>Marceau Dewilde</name>
+			<url>https://github.com/mdewilde</url>
+			<id>mdewilde</id>
+		</developer>
 	</developers>
 
 	<build>

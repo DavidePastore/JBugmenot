@@ -1,5 +1,10 @@
 package com.github.davidepastore.jbugmenot;
 
+/**
+ * Website credentials
+ * 
+ * @author <a href="https://github.com/mdewilde">Marceau Dewilde</a>
+ */
 public class Credentials {
 
 	private final String username;

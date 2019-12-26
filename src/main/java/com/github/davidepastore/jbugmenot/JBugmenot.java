@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.github.davidepastore.jbugmenot;
 
 import java.io.IOException;
@@ -19,6 +16,7 @@ import org.jsoup.select.Elements;
  * 
  * @author <a href="https://github.com/DavidePastore">Davide Pastore</a>
  * @author <a href="https://github.com/JBassx">Giuseppe Ciullo</a>
+ * @author <a href="https://github.com/mdewilde">Marceau Dewilde</a>
  */
 public class JBugmenot {
 

@@ -1,5 +1,10 @@
 package com.github.davidepastore.jbugmenot;
 
+/**
+ * Stats on age & validity of an account
+ * 
+ * @author <a href="https://github.com/mdewilde">Marceau Dewilde</a>
+ */
 public class Stats {
 
 	private final int percentage;

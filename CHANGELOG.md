@@ -1,4 +1,8 @@
-* x
+* 1.0.0 (2019-12-26)
+
+    * update dependencies
+    * remove unused code
+    * adjust domain modeling
 
 * 0.2.1 (2017-05-13)
 

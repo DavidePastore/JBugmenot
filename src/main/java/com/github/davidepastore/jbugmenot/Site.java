@@ -1,5 +1,10 @@
 package com.github.davidepastore.jbugmenot;
 
+/**
+ * Website name and internal BugMeNot id
+ * 
+ * @author <a href="https://github.com/mdewilde">Marceau Dewilde</a>
+ */
 public class Site {
 
 	private final long id;
