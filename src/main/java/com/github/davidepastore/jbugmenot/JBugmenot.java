@@ -5,8 +5,8 @@ package com.github.davidepastore.jbugmenot;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
@@ -22,201 +22,108 @@ import org.jsoup.select.Elements;
  */
 public class JBugmenot {
 
-	/**
-	 * Version of the library.
-	 */
-	private static final String VERSION = "0.2.2";
-
-	/**
-	 * Base url of the site.
-	 */
-	private static final String BASE_URL = "https://bugmenot.com/";
+	private static final Pattern WHITESPACE = Pattern.compile("\\s+");
 
 	/**
 	 * Base url for the view.
 	 */
-	private static final String BASE_VIEW_URL = BASE_URL + "view/";
+	private static final String VIEW_URL = "https://bugmenot.com/view/";
 
 	/**
 	 * Url to vote the website.
 	 */
-	private static final String VOTE_URL = BASE_URL + "vote.php";
-
-	/**
-	 * Number of milliseconds in a day.
-	 */
-	private static final long DAY_IN_MS = 1000 * 60 * 60 * 24;
+	private static final String VOTE_URL = "https://bugmenot.com/vote.php";
 
 	/**
 	 * Default user agent.
 	 */
-	private static String defaultUserAgent = "Mozilla";
+	private static String userAgent = "Mozilla/5.0";
 
 	/**
-	 * The minimum success rate.
-	 */
-	private static int minimumSuccessRate = 0;
-
-	/**
-	 * Get the version number.
-	 * 
-	 * @return Returns the version number.
-	 */
-	public static String getVersion() {
-		return VERSION;
-	}
-
-	/**
-	 * Get the base url.
-	 * 
-	 * @return Returns the base url.
-	 */
-	public static String getBaseUrl() {
-		return BASE_URL;
-	}
-
-	/**
-	 * @return the defaultUserAgent
-	 */
-	public static String getDefaultUserAgent() {
-		return defaultUserAgent;
-	}
-
-	/**
-	 * @param defaultUserAgent the defaultUserAgent to set
-	 */
-	public static void setDefaultUserAgent(String defaultUserAgent) {
-		JBugmenot.defaultUserAgent = defaultUserAgent;
-	}
-
-	/**
-	 * Get the minimum success rate. Accounts will not be added if the success rate
-	 * will be lower of this value.
-	 * 
-	 * @return the minimumSuccessRate
-	 */
-	public static int getMinimumSuccessRate() {
-		return minimumSuccessRate;
-	}
-
-	/**
-	 * Set the minimum success rate. Accounts will not be added if the success rate
-	 * will be lower of this value.
-	 * 
-	 * @param minimumSuccessRate the minimumSuccessRate to set
-	 */
-	public static void setMinimumSuccessRate(int minimumSuccessRate) {
-		JBugmenot.minimumSuccessRate = minimumSuccessRate;
-	}
-
-	/**
-	 * Returns an ArrayList<Account> of all the accounts of a website.
-	 * 
-	 * @param website the website.
-	 * @return Returns an ArrayList<Account> of all the accounts of a website.
+	 * @param website
+	 *                the website to get accounts for
+	 * @return {@link List} with every parsed {@link Account} for the {@code website}
 	 * @throws IOException
 	 */
-	public static List<Account> getAllAccounts(String website) throws IOException {
-		return getAllAccounts(website, defaultUserAgent);
-	}
-
-	/**
-	 * Returns an ArrayList<Account> of all the accounts of a website.
-	 * 
-	 * @param website   website the website.
-	 * @param userAgent the userAgent to use.
-	 * @return {@link List} with every parsed {@link Account} for the
-	 *         {@code website}
-	 * @throws IOException
-	 */
-	public static List<Account> getAllAccounts(String website, String userAgent) throws IOException {
+	public static List<Account> getAccounts(String website) throws IOException {
 		List<Account> accounts = new ArrayList<Account>();
-		Document doc = Jsoup.connect(BASE_VIEW_URL + website).userAgent(userAgent).get();
+		Document document = Jsoup.connect(VIEW_URL + website).userAgent(userAgent).get();
 
-		for (Element accountElement : doc.getElementsByClass("account")) {
-			Account account = new Account();
-			Elements kbdElements = accountElement.select("dd kbd");
+		Element h1 = document.select("#content").select("h1").get(0);
+		Elements accountElements = document.select(".account");
 
-			// Get username and password
-			String username = kbdElements.get(0).text();
-			String password = kbdElements.get(1).text();
+		Site site = parseSite(h1, accountElements);
 
-			// Get stats
-			Elements liElements = accountElement.select(".stats li");
-			String stats = liElements.get(0).text().substring(0, 3);
-
-			// Add the account only if reaches the minimum success rate
-			if (getOnlyNumbers(stats) >= minimumSuccessRate) {
-				long votes = parseVotes(liElements.get(1).text());
-				long site = Long.parseLong(accountElement.select("form input[name=site]").val());
-				String addingDate = liElements.get(2).text();
-
-				// Set the account attributes
-				account.setUsername(username);
-				account.setPassword(password);
-				account.setStats(stats);
-				account.setVotes(votes);
-				account.setOther(votes + " " + addingDate);
-				account.setId(Long.parseLong(accountElement.attr("data-account_id")));
-				account.setSite(site);
-				account.setAddingDate(parseDate(addingDate));
-				accounts.add(account);
-			}
-
+		for (Element element : accountElements) {
+			accounts.add(parseAccount(site, element));
 		}
 
 		return accounts;
 	}
 
-	/**
-	 * Parse the votes String and create the long value.
-	 * 
-	 * @param votes The votes String.
-	 * @return Returns the votes in long format.
-	 */
-	private static long parseVotes(String votes) {
-		return getOnlyNumbers(votes);
-	}
-
-	/**
-	 * Parse the date string and transform it in a {@link Date} object.
-	 * 
-	 * @param dateString The date string.
-	 * @return Returns the parsed {@link Date} object.
-	 */
-	private static Date parseDate(String dateString) {
-		long daysAgo = getOnlyNumbers(dateString);
-		if (dateString.contains("years") || dateString.contains("year")) {
-			daysAgo = daysAgo * 365;
-		} else if (dateString.contains("months") || dateString.contains("month")) {
-			daysAgo = daysAgo * 30;
+	private static Site parseSite(Element h1, Elements accountElements) {
+		String name = WHITESPACE.split(h1.text())[0];
+		Element siteIdInput = accountElements.select("form").select("input[name=site]").first();
+		if (siteIdInput != null) {
+			return new Site(Long.valueOf(siteIdInput.val()), name);
 		}
-		return new Date(System.currentTimeMillis() - (daysAgo * DAY_IN_MS));
+		return null;
 	}
 
-	/**
-	 * Get only the number part of a string.
-	 * 
-	 * @param number The number String.
-	 * @return Returns the numbers in long format.
-	 */
-	private static long getOnlyNumbers(String number) {
-		return Long.parseLong(number.replaceAll("\\D+", ""));
+	private static Account parseAccount(Site site, Element element) {
+		long id = parseId(element);
+		Elements kbds = element.select("dl").select("dd").select("kbd");
+		Credentials credentials = parseCredentials(kbds);
+		String note = parseNote(kbds);
+		Stats stats = parseStats(element);
+		return new Account(id, credentials, note, stats, site);
+	}
+
+	private static long parseId(Element element) {
+		String id = element.attr("data-account_id");
+		try {
+			return Long.parseLong(id);
+		} catch (NumberFormatException e) {
+			return -1;
+		}
+	}
+
+	private static Credentials parseCredentials(Elements kbds) {
+		String username = kbds.get(0).text();
+		String password = kbds.get(1).text();
+		return new Credentials(username, password);
+	}
+
+	private static String parseNote(Elements kbds) {
+		if (kbds.size() < 3) {
+			return null;
+		}
+		return kbds.get(2).text();
+	}
+
+	private static Stats parseStats(Element element) {
+		Elements lis = element.select(".stats").select("li");
+		int percentage = Integer.valueOf(WHITESPACE.split(lis.get(0).text())[0].replaceAll("%", ""));
+		int votes = Integer.valueOf(WHITESPACE.split(lis.get(1).text())[0]);
+		String age = lis.get(0).text();
+		return new Stats(percentage, votes, age);
 	}
 
 	/**
 	 * Vote the given account using a positive or negative vote.
 	 * 
-	 * @param account The account to vote.
-	 * @param vote    The vote. True to mark this as good login, false otherwise.
+	 * @param account
+	 *                {@link Account} object to mark
+	 * @param vote
+	 *                {@code boolean} vote, {@code true} to mark this as a working login, {@code false} otherwise
 	 * @throws IOException
 	 */
 	public static void vote(Account account, boolean vote) throws IOException {
 		Jsoup.connect(VOTE_URL)
-				.data("account", Long.toString(account.getId()))
-				.data("site", Long.toString(account.getSite()))
+				.data("account", String.valueOf(account.getId()))
+				.data("site", String.valueOf(account.getSite().getId()))
 				.data("vote", vote ? "Y" : "N")
-				.userAgent(defaultUserAgent)
+				.userAgent(userAgent)
 				.method(Method.POST)
 				.execute();
 	}

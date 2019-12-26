@@ -6,10 +6,8 @@ package com.github.davidepastore.jbugmenot;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -44,7 +42,7 @@ public class JBugmenotTest {
 	 */
 	@Test
 	public void testGetAllAccountsString() throws IOException {
-		List<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
+		List<Account> accounts = JBugmenot.getAccounts("nypost.com");
 		assertFalse("No accounts found for nypost.com", accounts.isEmpty());
 	}
 	
@@ -54,55 +52,27 @@ public class JBugmenotTest {
 	 */
 	@Test
 	public void testGetAllAccountsAndReadAttributes() throws IOException {
-		List<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
+		List<Account> accounts = JBugmenot.getAccounts("nypost.com");
 		Account firstAccount = accounts.get(0);
-		String username = firstAccount.getUsername();
-		String password = firstAccount.getPassword();
-		String other = firstAccount.getOther();
-		String stats = firstAccount.getStats();
-		long votes = firstAccount.getVotes();
+		String username = firstAccount.getCredentials().getUsername();
+		String password = firstAccount.getCredentials().getPassword();
+		String other = firstAccount.getNote();
+		int percentage = firstAccount.getStats().getPercentage();
+		String age = firstAccount.getStats().getAge();
+		long votes = firstAccount.getStats().getVotes();
 		long id = firstAccount.getId();
-		long site = firstAccount.getSite();
-		Date addingDate = firstAccount.getAddingDate();
-		System.out.printf("Username: %s\nPassword: %s\nOther: %s\nStats: %s\nVotes: %s\nId: %s\nSite: %s\nAdding Date: %s\n",
-				username, password, other, stats, votes, id, site, addingDate);
+		Site site = firstAccount.getSite();
+		System.out.printf("Username: %s\nPassword: %s\nOther: %s\nPercentage: %s\nAge: %s\nVotes: %s\nId: %s\nSite: %s\n",
+				username, password, other, percentage, age, votes, id, site);
 		assertNotNull("The username is null.", username);
 		assertNotNull("The password is null.", password);
 		assertNotNull("The other field is null.", other);
-		assertNotNull("The stats field is null.", stats);
+		assertNotNull("The stpercentageats field is null.", percentage);
 		assertNotNull("The votes field is null.", votes);
 		assertNotNull("The id field is null.", id);
 		assertNotNull("The site field is null.", site);
-		assertNotNull("The addingDate field is null.", addingDate);
 	}
 
-	/**
-	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugmenot#getAllAccounts(java.lang.String, java.lang.String)}.
-	 * @throws IOException 
-	 */
-	@Test
-	public void testGetAllAccountsStringString() throws IOException {
-		List<Account> accounts = JBugmenot.getAllAccounts("nypost.com", "Explorer");
-		assertFalse("No accounts found for nypost.com", accounts.isEmpty());
-	}
-	
-	/**
-	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugmenot#getAllAccounts(java.lang.String)}
-	 * with minimum success rate test.
-	 * @throws IOException 
-	 */
-	@Test
-	public void testGetAllAccountsAndReadAttributesWithMinimum() throws IOException {
-		int minimumSuccessRate = 50;
-		JBugmenot.setMinimumSuccessRate(minimumSuccessRate);
-		List<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
-		for (Account account : accounts) {
-			if(Integer.parseInt(account.getStats().replaceAll("\\D+", "")) < minimumSuccessRate){
-				fail("Minimum success rate is not respected.");
-			}
-		}
-	}
-	
 	/**
 	 * Test method for
 	 * {@link com.github.davidepastore.jbugmenot.JBugmenot#vote(com.github.davidepastore.jbugmenot, boolean)}.
@@ -115,14 +85,14 @@ public class JBugmenotTest {
 	@Ignore
 	public void testVote() throws IOException {
 		String site = "corriere.it";
-		List<Account> accounts = JBugmenot.getAllAccounts(site);
+		List<Account> accounts = JBugmenot.getAccounts(site);
 		Account lastAccount = accounts.get(accounts.size() - 1);
-		long oldVotes = lastAccount.getVotes();
+		long oldVotes = lastAccount.getStats().getVotes();
 		JBugmenot.vote(lastAccount, false);
 		
-		accounts = JBugmenot.getAllAccounts(site);
+		accounts = JBugmenot.getAccounts(site);
 		lastAccount = accounts.get(accounts.size() - 1);
-		long newVotes = lastAccount.getVotes();
+		long newVotes = lastAccount.getStats().getVotes();
 		assertEquals("Vote number is different", oldVotes + 1, newVotes);
 	}
 
