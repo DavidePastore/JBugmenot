@@ -3,19 +3,19 @@
  */
 package com.github.davidepastore.jbugmenot;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import com.github.davidepastore.jbugmenot.Account;
-import com.github.davidepastore.jbugmenot.JBugmenot;
 
 /**
  * JBugMeNot testing class.
@@ -44,7 +44,7 @@ public class JBugmenotTest {
 	 */
 	@Test
 	public void testGetAllAccountsString() throws IOException {
-		ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
+		List<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
 		assertFalse("No accounts found for nypost.com", accounts.isEmpty());
 	}
 	
@@ -54,7 +54,7 @@ public class JBugmenotTest {
 	 */
 	@Test
 	public void testGetAllAccountsAndReadAttributes() throws IOException {
-		ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
+		List<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
 		Account firstAccount = accounts.get(0);
 		String username = firstAccount.getUsername();
 		String password = firstAccount.getPassword();
@@ -82,7 +82,7 @@ public class JBugmenotTest {
 	 */
 	@Test
 	public void testGetAllAccountsStringString() throws IOException {
-		ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com", "Explorer");
+		List<Account> accounts = JBugmenot.getAllAccounts("nypost.com", "Explorer");
 		assertFalse("No accounts found for nypost.com", accounts.isEmpty());
 	}
 	
@@ -95,7 +95,7 @@ public class JBugmenotTest {
 	public void testGetAllAccountsAndReadAttributesWithMinimum() throws IOException {
 		int minimumSuccessRate = 50;
 		JBugmenot.setMinimumSuccessRate(minimumSuccessRate);
-		ArrayList<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
+		List<Account> accounts = JBugmenot.getAllAccounts("nypost.com");
 		for (Account account : accounts) {
 			if(Integer.parseInt(account.getStats().replaceAll("\\D+", "")) < minimumSuccessRate){
 				fail("Minimum success rate is not respected.");
@@ -104,16 +104,18 @@ public class JBugmenotTest {
 	}
 	
 	/**
-	 * Test method for {@link com.github.davidepastore.jbugmenot.JBugmenot#vote(com.github.davidepastore.jbugmenot, boolean)}.
-	 * This method is ignored because it works only the first time it is called. I guess it is because the request comes
-	 * from the same IP address.
-	 * @throws IOException 
+	 * Test method for
+	 * {@link com.github.davidepastore.jbugmenot.JBugmenot#vote(com.github.davidepastore.jbugmenot, boolean)}.
+	 * This method is ignored because it works only the first time it is called. I
+	 * guess it is because the request comes from the same IP address.
+	 * 
+	 * @throws IOException
 	 */
 	@Test
 	@Ignore
 	public void testVote() throws IOException {
 		String site = "corriere.it";
-		ArrayList<Account> accounts = JBugmenot.getAllAccounts(site);
+		List<Account> accounts = JBugmenot.getAllAccounts(site);
 		Account lastAccount = accounts.get(accounts.size() - 1);
 		long oldVotes = lastAccount.getVotes();
 		JBugmenot.vote(lastAccount, false);
