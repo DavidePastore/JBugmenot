@@ -154,4 +154,9 @@ public class Account {
 		this.addingDate = addingDate;
 	}
 
+	@Override
+	public String toString() {
+		return "Account [username=" + username + ", password=" + password + ", other=" + other + ", stats=" + stats + ", votes=" + votes + ", id=" + id + ", site=" + site + ", addingDate=" + addingDate + "]";
+	}
+
 }
