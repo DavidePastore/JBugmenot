@@ -41,7 +41,7 @@ public class JBugmenot {
 	 * @param website
 	 *                the website to get accounts for
 	 * @return {@link List} with every parsed {@link Account} for the {@code website}
-	 * @throws IOException
+	 * @throws IOException on network communication issues
 	 */
 	public static List<Account> getAccounts(String website) throws IOException {
 		List<Account> accounts = new ArrayList<Account>();
@@ -114,7 +114,7 @@ public class JBugmenot {
 	 *                {@link Account} object to mark
 	 * @param vote
 	 *                {@code boolean} vote, {@code true} to mark this as a working login, {@code false} otherwise
-	 * @throws IOException
+	 * @throws IOException on network communication issues
 	 */
 	public static void vote(Account account, boolean vote) throws IOException {
 		Jsoup.connect(VOTE_URL)

@@ -1,7 +1,7 @@
 package com.github.davidepastore.jbugmenot;
 
 /**
- * Stats on age & validity of an account
+ * Stats on age and validity of an account
  * 
  * @author <a href="https://github.com/mdewilde">Marceau Dewilde</a>
  */
